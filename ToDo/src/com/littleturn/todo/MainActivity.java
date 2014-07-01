@@ -5,8 +5,18 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	ListView l1;
@@ -22,6 +32,7 @@ public static final int[] images = { R.drawable.ic_launcher,
         R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher };
     
     List<RowItem> rowItems;
+    CustomAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +46,7 @@ public static final int[] images = { R.drawable.ic_launcher,
         }
         
         l1=(ListView)findViewById(R.id.list);
-       CustomAdapter adapter = new CustomAdapter(this, rowItems);
+       adapter = new CustomAdapter(this, rowItems);
         l1.setAdapter(adapter);
         
     }
@@ -47,5 +58,79 @@ public static final int[] images = { R.drawable.ic_launcher,
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	// TODO Auto-generated method stub
+    	
+    	switch (item.getItemId()) {
+		case R.id.contactsicon:
+			//Toast.makeText(getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
+			
+			
+			// dialog box
+	/*		final Dialog dialog = new Dialog(MainActivity.this);
+			dialog.setContentView(R.layout.customdialog_layout);
+			dialog.setTitle("Add Task");
+			TextView t = (TextView)findViewById(R.id.textView1);
+			EditText e =(EditText) findViewById(R.id.dialogTaskText);
+			TimePicker tp =(TimePicker)findViewById(R.id.dialogTimePicker); 
+			Button dialogButton = (Button)findViewById(R.id.dialogButton);
+			dialogButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
+			
+			dialog.show();     */
+			
+			final AlertDialog dialogDetails;
+			LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+			View dialogview = inflater.inflate(R.layout.customdialog_layout, null);
+			AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(this);
+			dialogbuilder.setTitle("Add New Task");
+			dialogbuilder.setView(dialogview);
+			dialogDetails = dialogbuilder.create();
+			dialogDetails.show();
+			TextView t = (TextView)dialogview.findViewById(R.id.textView1);
+			t.setText("Task :");
+			 final EditText e =(EditText) dialogview.findViewById(R.id.dialogTaskText);
+			final TimePicker tp =(TimePicker) dialogview.findViewById(R.id.dialogTimePicker); 
+			
+			
+			
+			Button dialogButton = (Button)dialogview.findViewById(R.id.dialogButton);
+			dialogButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					//Toast.makeText(getApplicationContext(), ""+e.getText().toString()+" "+tp.getCurrentHour(), Toast.LENGTH_SHORT).show();
+					RowItem item = new RowItem(R.drawable.ic_launcher, e.getText().toString(), ""+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+		            rowItems.add(item);
+		            adapter.notifyDataSetChanged();
+					dialogDetails.dismiss();
+					
+				}
+			});  
+			
+			break;
+
+		default:
+			break;
+		}
+    	
+    	return super.onOptionsItemSelected(item);
+    	
+    	
+    }
+    
+    
+    
+    
+    
     
 }
