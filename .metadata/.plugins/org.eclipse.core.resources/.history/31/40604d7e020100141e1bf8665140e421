@@ -23,42 +23,35 @@ public class CustomAdapter extends BaseAdapter{
         imge=null;
     }
     
-  /*  public CustomAdapter(Context myContext,String[] text, String[] text1,int[] text3) {
+    public CustomAdapter(Context myContext,String[] text, String[] text1,int[] text3) {
         Title = text;
         Detail = text1;
         imge = text3;
         inflater= LayoutInflater.from(myContext);
         myContext=this.myContext;
     }
-	*/
-    public CustomAdapter(Context myContext,List<RowItem> items) {
-       
-        inflater= LayoutInflater.from(myContext);
-        myContext=this.myContext;
-        this.rowItems = items;
-    }
-    
-    
+	
+	
 	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return rowItems.size();
+		return Title.length;
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return rowItems.get(position);
+		return null;
 	}
 
 	@Override
-	public long getItemId(int position) {
+	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
-		return rowItems.indexOf(getItem(position));
+		return arg0;
 	}
 
-/*	@Override
+	@Override
 	public View getView(int position, View arg1, ViewGroup parent) {
 		// TODO Auto-generated method stub
 	//	LayoutInflater inflater = getLayoutInflater();
@@ -77,38 +70,5 @@ public class CustomAdapter extends BaseAdapter{
         return (row);
 
 	}
-*/
-	
-	/*private view holder class*/
-    private class ViewHolder {
-        ImageView imageView;
-        TextView txtTitle;
-        TextView txtDesc;
-    }
-	
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		ViewHolder holder = null;
-		if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_row, null);
-            holder = new ViewHolder();
-            holder.txtDesc = (TextView) convertView.findViewById(R.id.timeText);
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.taskText);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView1);
-            convertView.setTag(holder);
-        }
-        else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-         
-        RowItem rowItem = (RowItem) getItem(position);
-         
-        holder.txtDesc.setText(rowItem.getDesc());
-        holder.txtTitle.setText(rowItem.getTitle());
-        holder.imageView.setImageResource(rowItem.getImageId());
-        
-        return convertView;
 
-	}
-	
 }

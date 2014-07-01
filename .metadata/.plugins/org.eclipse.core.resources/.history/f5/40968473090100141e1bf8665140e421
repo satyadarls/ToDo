@@ -90,11 +90,11 @@ public class CustomAdapter extends BaseAdapter{
 		// TODO Auto-generated method stub
 		ViewHolder holder = null;
 		if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_row, null);
+            convertView = inflater.inflate(R.layout.list_item, null);
             holder = new ViewHolder();
-            holder.txtDesc = (TextView) convertView.findViewById(R.id.timeText);
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.taskText);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView1);
+            holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
+            holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
         }
         else {

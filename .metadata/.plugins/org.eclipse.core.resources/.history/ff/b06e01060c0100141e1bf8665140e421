@@ -35,7 +35,7 @@ public static final int[] images = { R.drawable.ic_launcher,
         }
         
         l1=(ListView)findViewById(R.id.list);
-       CustomAdapter adapter = new CustomAdapter(this, rowItems);
+       CustomAdapter adapter = new CustomAdapter(this, titles, times, images);
         l1.setAdapter(adapter);
         
     }

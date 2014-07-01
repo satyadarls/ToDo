@@ -1,8 +1,5 @@
 package com.littleturn.todo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -21,21 +18,15 @@ public static final String[] times = new String[] {
 public static final int[] images = { R.drawable.ic_launcher,
         R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher };
     
-    List<RowItem> rowItems;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
         
-        rowItems = new ArrayList<RowItem>();
-        for (int i = 0; i < titles.length; i++) {
-            RowItem item = new RowItem(images[i], titles[i], times[i]);
-            rowItems.add(item);
-        }
-        
         l1=(ListView)findViewById(R.id.list);
-       CustomAdapter adapter = new CustomAdapter(this, rowItems);
+       CustomAdapter adapter = new CustomAdapter(this, titles, times, images);
         l1.setAdapter(adapter);
         
     }
