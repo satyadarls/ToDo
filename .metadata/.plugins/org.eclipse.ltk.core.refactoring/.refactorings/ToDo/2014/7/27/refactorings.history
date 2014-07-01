@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ToDo/res/layout/list_layout.xml&apos; to &apos;list_row.xml&apos;" description="Rename resource &apos;list_layout.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="res/layout/list_layout.xml" name="list_row.xml" stamp="1404201091692" updateReferences="true"/>
+</session>
