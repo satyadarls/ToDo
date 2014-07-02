@@ -9,34 +9,49 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialogTaskText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:text="Task :"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/dialogTaskText"
+    <Button
+        android:id="@+id/timebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:ems="10" />
+        android:layout_alignBaseline="@+id/datebutton"
+        android:layout_alignBottom="@+id/datebutton"
+        android:layout_marginLeft="60dp"
+        android:layout_toRightOf="@+id/datebutton"
+        android:text="Time" />
 
-    <TimePicker
-        android:id="@+id/dialogTimePicker"
+    <Button
+        android:id="@+id/datebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialogTaskText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="Date" />
 
     <Button
         android:id="@+id/dialogButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dialogTimePicker"
+        android:layout_below="@+id/timebutton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="20dp"
         android:text="ADD TASK" />
+
+    <EditText
+        android:id="@+id/dialogTaskText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/datebutton"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>
