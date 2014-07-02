@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 	EditText e;    
 	Button dt,tm,dialogButton;   
     List<RowItem> rowItems;
-    RowItem itemData;
+    RowItem itemRow;
     CustomAdapter adapter;
     SQLiteDatabase db;
     Cursor cu;
@@ -102,21 +102,25 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				final int deletePosition = position;
 				 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-				 	alert.setIcon(R.drawable.delete);
-		            alert.setTitle("DELETE TASK");
-		            alert.setMessage("Are you sure you want delete this Task?");
+		        
+		            alert.setTitle("Are you sure you want to Delete this Contact");
+		            alert.setMessage("Do you want delete this item?");
 		            alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 		                public void onClick(DialogInterface dialog, int which) {
 		                    // TOD O Auto-generated method stub
 		                        
 		                	
 		               //============deleting from database============ 
-		                	itemData = rowItems.get(deletePosition);
+		                		itemRow = rowItems.get(deletePosition);
+		                	
 		               
-		                	db  = openOrCreateDatabase("tasks", MODE_WORLD_WRITEABLE,null);
-		                	db.delete("tasksdetails", "name='"+itemData.getTitle()+"'",null);
-		                	Toast.makeText(getApplicationContext(),"Task "+itemData.getTitle()+" deleted", Toast.LENGTH_SHORT).show();
+		                	 db  = openOrCreateDatabase("tasks", MODE_WORLD_WRITEABLE,null);
+		                	db.delete("tasksdetails", "name='"+itemRow.getItemName()+"'",null);
+		                	Toast.makeText(getApplicationContext(), itemRow.getItemName()+" deleted", Toast.LENGTH_SHORT).show();
 		             //=====================================================================   	
+		                	
+		                	
+		                	
 		                        // main code on after clicking yes
 		                        rowItems.remove(deletePosition);
 		                        adapter.notifyDataSetChanged();

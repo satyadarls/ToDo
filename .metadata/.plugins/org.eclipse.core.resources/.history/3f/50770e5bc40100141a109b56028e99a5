@@ -22,7 +22,7 @@ public class ReminderAlarm extends BroadcastReceiver{
 	      notification = new Notification(R.drawable.ic_launcher,"Notification", System.currentTimeMillis());
 	      notification.setLatestEventInfo(context, from, "" , contentIntent);
 	      mNotificationManager.notify(Integer.parseInt(intent.getExtras().get("NotifyCount").toString()), notification);        
-	      Toast.makeText(context, "ONE OF YOUR TASKS TIME'S UP!!!!", Toast.LENGTH_LONG).show(); 
+	      Toast.makeText(context, "New Notification Received", Toast.LENGTH_LONG).show(); 
 	      Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 	      vibrator.vibrate(2000);
 	 }

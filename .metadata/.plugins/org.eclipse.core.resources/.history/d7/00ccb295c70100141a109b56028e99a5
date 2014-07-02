@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 	EditText e;    
 	Button dt,tm,dialogButton;   
     List<RowItem> rowItems;
-    RowItem itemData;
+    RowItem itemRow;
     CustomAdapter adapter;
     SQLiteDatabase db;
     Cursor cu;
@@ -111,11 +111,11 @@ public class MainActivity extends Activity {
 		                        
 		                	
 		               //============deleting from database============ 
-		                	itemData = rowItems.get(deletePosition);
+		                	itemRow = rowItems.get(deletePosition);
 		               
 		                	db  = openOrCreateDatabase("tasks", MODE_WORLD_WRITEABLE,null);
-		                	db.delete("tasksdetails", "name='"+itemData.getTitle()+"'",null);
-		                	Toast.makeText(getApplicationContext(),"Task "+itemData.getTitle()+" deleted", Toast.LENGTH_SHORT).show();
+		                	db.delete("tasksdetails", "name='"+itemRow.getTitle()+"'",null);
+		                	Toast.makeText(getApplicationContext(),"Task "+itemRow.getTitle()+" deleted", Toast.LENGTH_SHORT).show();
 		             //=====================================================================   	
 		                        // main code on after clicking yes
 		                        rowItems.remove(deletePosition);
