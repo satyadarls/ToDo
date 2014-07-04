@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099CC" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialogTaskText"
+        android:layout_alignParentLeft="true"
+        android:text="Task :"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/timebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/datebutton"
+        android:layout_alignBottom="@+id/datebutton"
+        android:layout_marginLeft="60dp"
+        android:layout_toRightOf="@+id/datebutton"
+        android:text="Time" />
+
+    <Button
+        android:id="@+id/datebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogTaskText"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="Date" />
+
+    <EditText
+        android:id="@+id/dialogTaskText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/datebutton"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android1:id="@+id/dialogButton"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_below="@+id/timebutton"
+        android1:layout_centerHorizontal="true"
+        android1:layout_marginTop="133dp"
+        android1:text="ADD TASK" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timebutton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp" >
+
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="LOW" />
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NORMAL" />
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="HIGH" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/radioGroup1"
+        android:layout_toLeftOf="@+id/radioGroup1"
+        android:text="Priority :"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+</RelativeLayout>

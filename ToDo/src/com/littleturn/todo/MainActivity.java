@@ -33,6 +33,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -50,10 +52,13 @@ public class MainActivity extends Activity {
 	boolean dateFlag=false;
 	boolean timeFlag=false;
 	int notificationCount;
-	String time,contentTitle;
+	String time,contentTitle,Priority;
 	Context mContext;
 	EditText e;    
-	Button dt,tm,dialogButton;   
+	Button dt,tm,dialogButton;
+	RadioGroup rg;
+	RadioButton l,n,h,priority;
+	int selectedid;
     List<RowItem> rowItems;
     RowItem itemData;
     CustomAdapter adapter;
@@ -79,14 +84,14 @@ public class MainActivity extends Activity {
         
         //========================================
         db  = openOrCreateDatabase("tasks", MODE_WORLD_WRITEABLE,null);
-        db.execSQL("create table if not exists tasksdetails(name VARCHAR,hours VARCHAR,minutes VARCHAR)");
+        db.execSQL("create table if not exists tasksdetails(name VARCHAR,hours VARCHAR,minutes VARCHAR,priority VARCHAR)");
         cu= db.rawQuery("select * from tasksdetails", null); // null is for mode.
         
         while(cu.moveToNext()){
-        	RowItem item = new RowItem(R.drawable.ic_launcher,""+cu.getString(0),""+cu.getString(1)+":"+cu.getString(2));
-            rowItems.add(item);
+        	RowItem item = new RowItem(R.drawable.ic_launcher,""+cu.getString(0),""+cu.getString(1)+":"+cu.getString(2),""+cu.getString(3));
+        	rowItems.add(item);
         	adapter.notifyDataSetChanged();
-        }	
+        }
         //==========================================
         l1.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -108,7 +113,11 @@ public class MainActivity extends Activity {
 		            alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 		                public void onClick(DialogInterface dialog, int which) {
 		                    // TOD O Auto-generated method stub
-		                        
+		                	
+		                	Intent intentstop = new Intent(mContext, ReminderAlarm.class);
+		                	PendingIntent senderstop = PendingIntent.getBroadcast(mContext,deletePosition+1, intentstop, 0);
+		                	AlarmManager alarmManagerstop = (AlarmManager) getSystemService(ALARM_SERVICE);
+		                	alarmManagerstop.cancel(senderstop);
 		                	
 		               //============deleting from database============ 
 		                	itemData = rowItems.get(deletePosition);
@@ -118,6 +127,7 @@ public class MainActivity extends Activity {
 		                	Toast.makeText(getApplicationContext(),"Task "+itemData.getTitle()+" deleted", Toast.LENGTH_SHORT).show();
 		             //=====================================================================   	
 		                        // main code on after clicking yes
+		        
 		                        rowItems.remove(deletePosition);
 		                        adapter.notifyDataSetChanged();
 		                        adapter.notifyDataSetInvalidated();
@@ -154,7 +164,7 @@ public class MainActivity extends Activity {
 			
 			final AlertDialog dialogDetails;
 			LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-			View dialogview = inflater.inflate(R.layout.customdialog_layout, null);
+			final View dialogview = inflater.inflate(R.layout.customdialog_layout, null);
 			AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(this);
 			dialogbuilder.setTitle("Add New Task");
 			dialogbuilder.setView(dialogview);
@@ -165,10 +175,17 @@ public class MainActivity extends Activity {
 			e =(EditText) dialogview.findViewById(R.id.dialogTaskText); 
 			dt=(Button)dialogview.findViewById(R.id.datebutton);
 			tm=(Button)dialogview.findViewById(R.id.timebutton);
+			rg=(RadioGroup)dialogview.findViewById(R.id.radioGroup1);
+			l=(RadioButton)dialogview.findViewById(R.id.radio0);
+			n=(RadioButton)dialogview.findViewById(R.id.radio1);
+			h=(RadioButton)dialogview.findViewById(R.id.radio2);
 			dialogButton = (Button) dialogview.findViewById(R.id.dialogButton);
 			TextListener textListener=new TextListener();
 			dt.setEnabled(false);
 			tm.setEnabled(false);
+			l.setEnabled(false);
+			n.setEnabled(false);
+			h.setEnabled(false);
 			dialogButton.setEnabled(false);
 			e.addTextChangedListener(textListener);
 			tm.setOnClickListener(new View.OnClickListener() {
@@ -205,11 +222,18 @@ public class MainActivity extends Activity {
 				            		// TODO Auto-generated catch block
 				            		e.printStackTrace();
 				            	}                                        
-				            long when = date.getTime();                
-				            contentTitle = e.getText().toString();         
+				            long when = date.getTime();            
+				            selectedid=rg.getCheckedRadioButtonId();
+						    priority=(RadioButton)dialogview.findViewById(selectedid);
+				            contentTitle = e.getText().toString(); 
+				            Priority = priority.getText().toString();
 				         AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 				         Intent notificationIntent = new Intent(mContext, ReminderAlarm.class);
 				         notificationIntent.putExtra("Name",contentTitle ); 
+				         notificationIntent.putExtra("PRIORITY", Priority);
+				         notificationIntent.putExtra("Ringtonelow",getResources().getResourceName(R.raw.low));
+				         notificationIntent.putExtra("Ringtonenormal",getResources().getResourceName(R.raw.normal));
+				         notificationIntent.putExtra("Ringtonehigh",getResources().getResourceName(R.raw.high));
 				         notificationIntent.putExtra("NotifyCount",notificationCount );
 				         PendingIntent pi = PendingIntent.getBroadcast(mContext, notificationCount, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 				         mgr.set(AlarmManager.RTC_WAKEUP,when, pi);
@@ -219,10 +243,10 @@ public class MainActivity extends Activity {
 				         values.put("name", contentTitle);
 				         values.put("hours", mHour);
 				         values.put("minutes", mMinute);
+				         values.put("priority", Priority);
 				         db.insert("tasksDetails", null, values);
-				   //===================================================      
-
-					RowItem item = new RowItem(R.drawable.ic_launcher, e.getText().toString(),""+mHour+":"+mMinute);
+				   //===================================================
+					RowItem item = new RowItem(R.drawable.ic_launcher, e.getText().toString(),""+mHour+":"+mMinute,priority.getText().toString());
 		            rowItems.add(item);
 		            adapter.notifyDataSetChanged();
 					dialogDetails.dismiss();
@@ -265,11 +289,17 @@ public class MainActivity extends Activity {
     	    dt.setEnabled(false);
     	    tm.setEnabled(false);
     	    dialogButton.setEnabled(false);
+    	    l.setEnabled(false);
+			n.setEnabled(false);
+			h.setEnabled(false);
     	   }
     	   else if(e.getText().length()>0){
     	    dt.setEnabled(true);
     	    tm.setEnabled(true);
     	    dialogButton.setEnabled(true);
+    	    l.setEnabled(true);
+			n.setEnabled(true);
+			h.setEnabled(true);
     	   }
     	  }     
     }

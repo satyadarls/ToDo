@@ -4,11 +4,13 @@ public class RowItem {
 	private int imageId;
     private String title;
     private String time;
+    private String priority;
      
-    public RowItem(int imageId, String title, String time) {
+    public RowItem(int imageId, String title, String time,String priority) {
         this.imageId = imageId;
         this.title = title;
         this.time = time;
+        this.priority = priority;
     }
     public int getImageId() {
         return imageId;
@@ -28,8 +30,14 @@ public class RowItem {
     public void setTitle(String title) {
         this.title = title;
     }
+    public String getPriority() {
+        return priority;
+    }
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
     @Override
     public String toString() {
-        return title + "\n" + time;
+        return title + "\n" + time + "\n" + priority;
     }   
 }
