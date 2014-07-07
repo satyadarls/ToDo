@@ -1448,3 +1448,16 @@ Java Model Exception: Java Model Status [Timed out while retrieving the attached
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
 !SUBENTRY 1 org.eclipse.jdt.core 4 1012 2014-07-02 14:16:19.808
 !MESSAGE Timed out while retrieving the attached javadoc for AdapterView [in AdapterView.class [in android.widget [in F:\softwares\adt-bundle-windows-x86_64-20130219\sdk\platforms\android-17\android.jar]]] 
+!SESSION 2014-07-03 13:03:51.124 -----------------------------------------------
+eclipse.buildId=v22.6.2-1085508
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product -keyring /Users/CHANDU/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.product -keyring /Users/CHANDU/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-07-03 13:04:33.979
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2014-07-03 13:04:34.800
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
