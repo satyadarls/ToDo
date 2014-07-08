@@ -29,12 +29,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -52,13 +55,14 @@ public class MainActivity extends Activity {
 	boolean dateFlag=false;
 	boolean timeFlag=false;
 	int notificationCount;
-	String time,contentTitle,Priority;
+	String time,contentTitle,Priority,selectedCategory;
 	Context mContext;
 	EditText e;    
 	Button dt,tm,dialogButton;
 	RadioGroup rg;
 	RadioButton l,n,h,priority;
-	int selectedid;
+	Spinner categorySpinner;
+	int selectedid; 
     List<RowItem> rowItems;
     RowItem itemData;
     CustomAdapter adapter;
@@ -67,7 +71,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.avtivity_main);
         mContext=this;
         c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -81,14 +85,14 @@ public class MainActivity extends Activity {
         adapter = new CustomAdapter(this, rowItems);
         l1.setAdapter(adapter);
         
-        
         //========================================
         db  = openOrCreateDatabase("tasks", MODE_WORLD_WRITEABLE,null);
-        db.execSQL("create table if not exists tasksdetails(name VARCHAR,hours VARCHAR,minutes VARCHAR,priority VARCHAR)");
+        db.execSQL("create table if not exists tasksdetails(name VARCHAR,hours VARCHAR,minutes VARCHAR,priority VARCHAR,category VARCHAR)");
+       //db.execSQL("drop table tasksdetails");
         cu= db.rawQuery("select * from tasksdetails", null); // null is for mode.
         
         while(cu.moveToNext()){
-        	RowItem item = new RowItem(R.drawable.ic_launcher,""+cu.getString(0),""+cu.getString(1)+":"+cu.getString(2),""+cu.getString(3));
+        	RowItem item = new RowItem(R.drawable.ic_launcher,""+cu.getString(0),""+cu.getString(1)+":"+cu.getString(2),""+cu.getString(3),""+cu.getString(4));
         	rowItems.add(item);
         	adapter.notifyDataSetChanged();
         }
@@ -179,6 +183,7 @@ public class MainActivity extends Activity {
 			l=(RadioButton)dialogview.findViewById(R.id.radio0);
 			n=(RadioButton)dialogview.findViewById(R.id.radio1);
 			h=(RadioButton)dialogview.findViewById(R.id.radio2);
+			categorySpinner=(Spinner)dialogview.findViewById(R.id.spinnercategory);
 			dialogButton = (Button) dialogview.findViewById(R.id.dialogButton);
 			TextListener textListener=new TextListener();
 			dt.setEnabled(false);
@@ -186,8 +191,19 @@ public class MainActivity extends Activity {
 			l.setEnabled(false);
 			n.setEnabled(false);
 			h.setEnabled(false);
+			categorySpinner.setEnabled(false);
 			dialogButton.setEnabled(false);
 			e.addTextChangedListener(textListener);
+			List<String> list = new ArrayList<String>();
+	    	list.add("DAILY");
+	    	list.add("WEEKLY");
+	    	list.add("MONTHLY");
+	    	list.add("YEARLY");
+	    	list.add("BIRTHDAYS");
+	    	list.add("ANIVERSARIES");
+	    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
+	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    	categorySpinner.setAdapter(dataAdapter);
 			tm.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -202,6 +218,24 @@ public class MainActivity extends Activity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 						showDialog(DATE_DIALOG_ID);
+				}
+			});
+			categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> adapterView,
+						View arg1, int position, long arg3) {
+					// TODO Auto-generated method stub
+					selectedCategory=adapterView.getItemAtPosition(position).toString();
+					//Toast.makeText(adapterView.getContext(),adapterView.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+
+				}
+
+				@Override
+				public void onNothingSelected(
+						AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
 				}
 			});
 			dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -227,10 +261,12 @@ public class MainActivity extends Activity {
 						    priority=(RadioButton)dialogview.findViewById(selectedid);
 				            contentTitle = e.getText().toString(); 
 				            Priority = priority.getText().toString();
+				            
 				         AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 				         Intent notificationIntent = new Intent(mContext, ReminderAlarm.class);
 				         notificationIntent.putExtra("Name",contentTitle ); 
 				         notificationIntent.putExtra("PRIORITY", Priority);
+				         notificationIntent.putExtra("Category", selectedCategory);
 				         notificationIntent.putExtra("Ringtonelow",getResources().getResourceName(R.raw.low));
 				         notificationIntent.putExtra("Ringtonenormal",getResources().getResourceName(R.raw.normal));
 				         notificationIntent.putExtra("Ringtonehigh",getResources().getResourceName(R.raw.high));
@@ -244,9 +280,10 @@ public class MainActivity extends Activity {
 				         values.put("hours", mHour);
 				         values.put("minutes", mMinute);
 				         values.put("priority", Priority);
+				         values.put("category", selectedCategory);
 				         db.insert("tasksDetails", null, values);
 				   //===================================================
-					RowItem item = new RowItem(R.drawable.ic_launcher, e.getText().toString(),""+mHour+":"+mMinute,priority.getText().toString());
+					RowItem item = new RowItem(R.drawable.ic_launcher, e.getText().toString(),""+mHour+":"+mMinute,priority.getText().toString(),"("+selectedCategory+")");
 		            rowItems.add(item);
 		            adapter.notifyDataSetChanged();
 					dialogDetails.dismiss();
@@ -292,6 +329,7 @@ public class MainActivity extends Activity {
     	    l.setEnabled(false);
 			n.setEnabled(false);
 			h.setEnabled(false);
+			categorySpinner.setEnabled(false);
     	   }
     	   else if(e.getText().length()>0){
     	    dt.setEnabled(true);
@@ -300,6 +338,7 @@ public class MainActivity extends Activity {
     	    l.setEnabled(true);
 			n.setEnabled(true);
 			h.setEnabled(true);
+			categorySpinner.setEnabled(true);
     	   }
     	  }     
     }

@@ -1,0 +1,54 @@
+package com.littleturn.todo;
+
+import java.util.Calendar;
+import java.util.List;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+public class TasksCls extends Fragment {
+	ListView l1;
+	int mYear;
+    int mMonth;
+    int mDay;
+    int mHour;
+    int mMinute;
+    Calendar c;
+	static final int DATE_DIALOG_ID = 1;
+	static final int TIME_DIALOG_ID = 0;
+	boolean dateFlag=false;
+	boolean timeFlag=false;
+	int notificationCount;
+	String time,contentTitle,Priority;
+	Context mContext;
+	EditText e;    
+	Button dt,tm,dialogButton;
+	RadioGroup rg;
+	RadioButton l,n,h,priority;
+	int selectedid;
+    List<RowItem> rowItems;
+    RowItem itemData;
+    CustomAdapter adapter;
+    SQLiteDatabase db;
+    Cursor cu;
+    View rootView;
+	@Override
+	   public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		   rootView =inflater.inflate(R.layout.tasks, container,false);
+		   
+		  return rootView;
+	   }
+}
