@@ -356,7 +356,7 @@ public class MainActivity extends Activity {
                       mDateSetListener,
                       mYear, mMonth, mDay);
       }
-     return super.onCreateDialog(id);
+     return super.onCreateDialog(id); //Replace this with the latest one. Avoid Deprecated methods
     }
     
     private DatePickerDialog.OnDateSetListener mDateSetListener =
