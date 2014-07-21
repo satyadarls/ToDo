@@ -1,0 +1,29 @@
+package com.littleturn.todo;
+
+import android.widget.Button;
+
+public class RowItem2 {
+	private int imageId;
+    private String title;
+     
+    public RowItem2(int imageId, String title,Button button) {
+        this.imageId = imageId;
+        this.title = title;
+    }
+    public int getImageId() {
+        return imageId;
+    }
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    @Override
+    public String toString() {
+        return title ;
+    }
+}

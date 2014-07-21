@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 <<<<<<< HEAD
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="374" key="DIALOG_X_ORIGIN"/>
+		<item value="22" key="DIALOG_Y_ORIGIN"/>
+	</section>
+=======
+<<<<<<< HEAD
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item value="900" key="dialogWidth"/>
 		<item value="563" key="dialogHeight"/>
@@ -13,6 +19,7 @@
 		<list key="textEntries">
 		</list>
 =======
+>>>>>>> 5325e521caf6599cbd3cbf7b15344780221af4cd
 	<section name="ImportExportAction">
 >>>>>>> FETCH_HEAD
 	</section>

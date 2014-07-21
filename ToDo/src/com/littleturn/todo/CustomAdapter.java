@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class CustomAdapter extends BaseAdapter{
 
-	String[] Title, Detail,Priority;
+	String[] Title, Detail,Priority,Category;
     int[] imge;
     Context myContext;
     LayoutInflater inflater;
@@ -22,6 +22,7 @@ public class CustomAdapter extends BaseAdapter{
         Detail = null;
         imge=null;
         Priority=null;
+        Category=null;
     }
 
     public CustomAdapter(Context myContext,List<RowItem> items) {
@@ -52,11 +53,12 @@ public class CustomAdapter extends BaseAdapter{
 	}
 	
 	/*private view holder class*/
-    private class ViewHolder {
+    public class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
         TextView txtDesc;
         TextView txtPriority;
+        TextView txtCategory;
     }
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -69,6 +71,7 @@ public class CustomAdapter extends BaseAdapter{
             holder.txtTitle = (TextView) convertView.findViewById(R.id.taskText);
             holder.imageView = (ImageView) convertView.findViewById(R.id.imageView1);
             holder.txtPriority = (TextView) convertView.findViewById(R.id.priorityText);
+            holder.txtCategory = (TextView) convertView.findViewById(R.id.categoryText);
             convertView.setTag(holder);
         }
         else {
@@ -81,6 +84,7 @@ public class CustomAdapter extends BaseAdapter{
         holder.txtTitle.setText(rowItem.getTitle());
         holder.imageView.setImageResource(rowItem.getImageId());
         holder.txtPriority.setText(rowItem.getPriority());
+        holder.txtCategory.setText(rowItem.getCategory());
         return convertView;
 
 	}

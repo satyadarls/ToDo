@@ -19,11 +19,12 @@ public class ReminderAlarm extends BroadcastReceiver{
 	  // TODO Auto-generated method stub       
 		  CharSequence name = intent.getStringExtra("Name");
 		  CharSequence priority = intent.getStringExtra("PRIORITY");
+		  CharSequence category =intent.getStringExtra("Category");
 		  if(priority.equals("LOW")){
 			  mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		      PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
 		      notification = new Notification(R.drawable.ic_launcher,"Notification", System.currentTimeMillis());
-		      notification.setLatestEventInfo(context, name, "("+priority+")"  , contentIntent);
+		      notification.setLatestEventInfo(context, name+"("+category+")", "("+priority+")"  , contentIntent);
 		      notification.sound = (Uri)(Uri.parse(intent.getStringExtra("Ringtonelow")));
 		      mNotificationManager.notify(Integer.parseInt(intent.getExtras().get("NotifyCount").toString()), notification);        
 		      Toast.makeText(context, "ONE OF YOUR TASKS TIME'S UP!!!!", Toast.LENGTH_LONG).show(); 
@@ -34,7 +35,7 @@ public class ReminderAlarm extends BroadcastReceiver{
 			  mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		      PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
 		      notification = new Notification(R.drawable.ic_launcher,"Notification", System.currentTimeMillis());
-		      notification.setLatestEventInfo(context, name, "("+priority+")" , contentIntent);
+		      notification.setLatestEventInfo(context, name+"("+category+")", "("+priority+")" , contentIntent);
 		      notification.sound = (Uri)(Uri.parse(intent.getStringExtra("Ringtonenormal")));
 		      mNotificationManager.notify(Integer.parseInt(intent.getExtras().get("NotifyCount").toString()), notification);        
 		      Toast.makeText(context, "ONE OF YOUR TASKS TIME'S UP!!!!", Toast.LENGTH_LONG).show(); 
@@ -45,7 +46,7 @@ public class ReminderAlarm extends BroadcastReceiver{
 			  mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		      PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
 		      notification = new Notification(R.drawable.ic_launcher,"Notification", System.currentTimeMillis());
-		      notification.setLatestEventInfo(context, name, "("+priority+")" , contentIntent);
+		      notification.setLatestEventInfo(context, name+"("+category+")", "("+priority+")" , contentIntent);
 		      notification.sound = (Uri)(Uri.parse(intent.getStringExtra("Ringtonehigh")));
 		      mNotificationManager.notify(Integer.parseInt(intent.getExtras().get("NotifyCount").toString()), notification);        
 		      Toast.makeText(context, "ONE OF YOUR TASKS TIME'S UP!!!!", Toast.LENGTH_LONG).show(); 
